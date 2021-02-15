@@ -14,12 +14,12 @@ from colorama import init, Fore, Back, Style
 # print('automatically back to default color again')
 
 # init(convert=True)
-a = []
-for i in range(10):
-    a.append(Back.WHITE + " ")
+# a = []
+# for i in range(10):
+#     a.append(Back.WHITE + " ")
 
-for i in range(10):
-    print(a[i])
+# for i in range(10):
+#     print(a[i])
 
 # deinit()
 
@@ -39,26 +39,37 @@ for i in range(10):
 # Back: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, RESET.
 # Style: DIM, NORMAL, BRIGHT, RESET_ALL
 
-import time
-import os
+# import time
+# import os
 
-size = os.get_terminal_size()
+# size = os.get_terminal_size()
 
-display_width = size[0]
-display_height = size[1]
+# display_width = size[0]
+# display_height = size[1]
 
-print(Fore.WHITE + Back.BLACK + Style.BRIGHT + "hello".center(display_width)+Style.RESET_ALL)
+# print(Fore.WHITE + Back.BLACK + Style.BRIGHT + "hello".center(display_width)+Style.RESET_ALL)
 
 
 
-colormap = {
-    1: [Back.RED,Back.YELLOW],
-    2: Back.BLACK,
-    9: Back.WHITE
-}
+# colormap = {
+#     1: [Back.RED,Back.YELLOW],
+#     2: Back.BLACK,
+#     9: Back.WHITE
+# }
 
-print(colormap[1][0])
-print(colormap[1][1])
-print(colormap[2])
-print(colormap[9])
+# print(colormap[1][0])
+# print(colormap[1][1])
+# print(colormap[2])
+# print(colormap[9])
+# print(Back.RESET)
+a= []
+for i in range(1):
+    a += [Back.BLACK]
+
+print(a[0] + 'yo')
+# a[6] = 'O'
+# print(a[6])
+
+for i in range(1):
+    print(str(i) + a[i] + 'yo',end='')
 print(Back.RESET)

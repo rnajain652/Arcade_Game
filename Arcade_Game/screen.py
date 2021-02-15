@@ -1,6 +1,7 @@
+import numpy as np
 from colorama import init, Fore, Back, Style
 from bricks import Brick, nakli_brick, sasti_brick, birla_brick, ambuja_brick
-import numpy as np
+from ball import Ball
 
 grid = [[1, 3, 2, 9, 2, 3, 1, 2],
         [2, 1, 3, 2, 3, 2, 3, 1],
@@ -70,7 +71,7 @@ class Screen():
     def getGame(self):
         return self.__game
 
-    def printScreen(self, paddle):
+    def printScreen(self, ball, paddle):
         # header
         current_row = "ARCADE GAME : Player1"
         print(Fore.WHITE + Back.BLUE + Style.BRIGHT +
@@ -107,6 +108,11 @@ class Screen():
                         ) + 1][self.bricks[x].getYposition() + b] = self.bricks[x].getColor()
             x += 1
 
+        # ball
+        # self.__game[ball.getXposition()][ball.getYposition() - 1] = '('
+        self.__game[ball.getXposition()][ball.getYposition()] ='O'
+        # self.__game[ball.getXposition()][ball.getYposition() + 1] = ')'
+
         # paddle line
         x = paddle.getStartpaddle()
         while x < paddle.getStartpaddle() + paddle.getLength():
@@ -115,10 +121,15 @@ class Screen():
 
         # print
         for i in range(self.__gameheight):
-            for j in range(self.__gamewidth):
+            num = self.__gamewidth
+            if(i==ball.getXposition()):
+                num = self.__gamewidth -1
+            for j in range(num):
                 print(self.__game[i][j] + " ", end='')
+
 
         # footer
         print(Back.WHITE + Fore.RED + Style.BRIGHT +
-              "Press q to Quit" + Style.RESET_ALL)
-        return    
+              "A: left | D: right | R: release ball | X: quit" + Style.RESET_ALL)
+
+        return

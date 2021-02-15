@@ -20,6 +20,7 @@ grid = [[1, 3, 2, 9, 2, 3, 1, 2],
 
 size = os.get_terminal_size()
 
+
 class Brick():
     def __init__(self, x, y):
         self.__xposition = x
@@ -87,6 +88,7 @@ class ambuja_brick(Brick):
     def getColor(self):
         return self.__color
 
+
 display_width = size[0]
 display_height = size[1]
 
@@ -145,22 +147,22 @@ for i in range(row_layout):
 x = 0
 while x < len(bricks):
     for j in range(brick_width):
-        print(bricks[x].getColor() + " ", end ='')
-        print(Back.BLACK + Back.RESET,end='')
-    print(Back.BLACK +Back.RESET,end='')
-    x+=1
-    if(x%col_layout ==0):
-        print('\n',end='')
-        print(Back.BLACK +Back.RESET, end='')
+        print(bricks[x].getColor() + " ", end='')
+        print(Back.BLACK + Back.RESET, end='')
+    print(Back.BLACK + Back.RESET, end='')
+    x += 1
+    if(x % col_layout == 0):
+        print('\n', end='')
+        print(Back.BLACK + Back.RESET, end='')
         num = x-col_layout
         while num < x:
             for j in range(brick_width):
-                print(bricks[num].getColor() + " ", end ='')
-                print(Back.BLACK + Back.RESET,end='')
-            print(Back.BLACK + Back.RESET,end='')    
-            num+=1
-        print('\n',end='')
-        print(Back.BLACK +Back.RESET, end='')
+                print(bricks[num].getColor() + " ", end='')
+                print(Back.BLACK + Back.RESET, end='')
+            print(Back.BLACK + Back.RESET, end='')
+            num += 1
+        print('\n', end='')
+        print(Back.BLACK + Back.RESET, end='')
 print(Back.BLACK + Back.RESET)
 
 # print(display_height)

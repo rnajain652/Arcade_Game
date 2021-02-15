@@ -7,6 +7,7 @@ colormap = {
     9: Back.WHITE
 }
 
+
 class Brick():
     def __init__(self, x, y):
         self.__xposition = x

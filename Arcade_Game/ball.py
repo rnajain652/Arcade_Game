@@ -44,6 +44,18 @@ class Ball():
         self.setBall(screen, self.__xposition, self.__yposition)
         return
 
+    def release(self,screen,paddle):
+        x = paddle.getStartpaddle()
+        l = paddle.getLength()
+        mid = int((x + (x+l))/2)
+
+        self.__xvelocity = -1 * self.__xvelocity
+        if(self.__yposition < mid):
+            self.__yvelocity = -1 * self.__yvelocity
+        else:
+            self.__yvelocity = self.__yvelocity
+        return
+
     def CollisionwithPaddle(self, paddle):
         x = paddle.getStartpaddle()
         l = paddle.getLength()

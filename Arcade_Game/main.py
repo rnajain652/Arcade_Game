@@ -17,7 +17,7 @@ paddle = Paddle(int(size[0]/2))
 x = paddle.getStartpaddle() 
 y = paddle.getStartpaddle() + paddle.getLength() -1
 mid = int((x + y)/2)
-ball = Ball(screen.getGameheight()-2,randint(mid, mid))
+ball = Ball(screen.getGameheight()-2,randint(x, y))
 
 x = 0
 ball_free = 0
@@ -43,7 +43,7 @@ while True:
         inp = ""
     if (inp == 'r' or inp == 'R'):
         if(ball_free == 0):
-            ball.movement(screen)
+            ball.release(screen,paddle)
             ball_free = 1
     if (inp == 'a' or inp == 'A' or inp == 'd' or inp == 'D'):
         if(paddle.getStartpaddle() > 0 and paddle.getStartpaddle() + paddle.getLength() < screen.getGamewidth()):
@@ -52,5 +52,5 @@ while True:
         paddle.movement(screen, inp)
     if(inp == 'x' or inp == 'X'):
         exit()
-        
+
     x += 1

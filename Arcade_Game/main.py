@@ -20,7 +20,6 @@ mid = int((x + y)/2)
 ball = Ball(screen.getGameheight()-2,randint(x, y))
 
 x = 0
-ball_free = 0
 prev_time = time.time()
 p_ball_time = time.time()
 
@@ -34,20 +33,19 @@ while True:
         screen.printScreen(ball, paddle)
         prev_time = curr_time
 
-    if(ball_free == 1 and c_ball_time - p_ball_time >= 1):
-        ball.movement(screen)
+    if(ball.getfree() == 1 and c_ball_time - p_ball_time >= ball.getSpeed()):
+        ball.movement(screen, paddle)
         p_ball_time = c_ball_time
         
     inp = input_to(Get())
     if(inp == None):
         inp = ""
-    if (inp == 'r' or inp == 'R'):
-        if(ball_free == 0):
+    if (inp == ' ' or inp == ' '):
+        if(ball.getfree() == 0):
             ball.release(screen,paddle)
-            ball_free = 1
     if (inp == 'a' or inp == 'A' or inp == 'd' or inp == 'D'):
         if(paddle.getStartpaddle() > 0 and paddle.getStartpaddle() + paddle.getLength() < screen.getGamewidth()):
-            if(ball_free == 0):
+            if(ball.getfree() == 0):
                 ball.initializeBall(screen,inp)
         paddle.movement(screen, inp)
     if(inp == 'x' or inp == 'X'):

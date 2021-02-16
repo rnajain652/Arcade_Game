@@ -86,6 +86,7 @@ class Screen():
         print(Fore.WHITE + Back.RED + Style.BRIGHT +
               current_row.center(self.__displaywidth) + Style.RESET_ALL)
         # print(Back.BLACK + Back.RESET)
+        
         for i in range(self.__displaywidth):
             print(Back.BLACK + " ", end='')
 
@@ -109,9 +110,7 @@ class Screen():
             x += 1
 
         # ball
-        # self.__game[ball.getXposition()][ball.getYposition() - 1] = '('
         self.__game[ball.getXposition()][ball.getYposition()] ='O'
-        # self.__game[ball.getXposition()][ball.getYposition() + 1] = ')'
 
         # paddle line
         x = paddle.getStartpaddle()
@@ -130,6 +129,12 @@ class Screen():
 
         # footer
         print(Back.WHITE + Fore.RED + Style.BRIGHT +
-              "A: left | D: right | R: release ball | X: quit" + Style.RESET_ALL)
+              "A: left | D: right | <space>: release ball | X: quit" + Style.RESET_ALL)
 
+        return
+
+    def gameover(self):
+        print("\033[2J")
+        print('Game over')
+        exit()
         return

@@ -8,7 +8,7 @@ class Ball():
         self.__yposition = y
         self.__xvelocity = 1
         self.__yvelocity = 1
-        self.__speed = 0.25
+        self.__speed = 0.50
         self.__free = 0
 
     def getfree(self):
@@ -93,6 +93,20 @@ class Ball():
             self.__yvelocity = -self.__yvelocity
             self.__yposition = self.__yposition + self.__yvelocity        
         return
+    
+    def CollisionwithPaddle(self,screen,paddle):
+        # exit()
+        x = paddle.getStartpaddle() 
+        y = paddle.getStartpaddle() + paddle.getLength() -1
+        mid = int((x + y)/2)
+        diff = abs(mid - self.__yposition)
+        if(self.__yposition < mid):
+            self.__yvelocity = (self.__yvelocity - diff)
+        else:
+            self.__yvelocity = (self.__yvelocity + diff)
+
+        self.__xvelocity = -self.__xvelocity
+        return
 
     def collisionCheck(self, screen, paddle):
         # print('\nin:')
@@ -102,10 +116,12 @@ class Ball():
             self.CollisionwithWall(paddle, screen, 'u')
         if(self.__xposition >= screen.getGameheight()):
             self.CollisionwithWall(paddle, screen, 'd') 
-        if(self.__yposition >= screen.getGamewidth()):
+        if(self.__yposition >= screen.getGamewidth()- 1):
             self.CollisionwithWall(paddle, screen, 'r')
         if(self.__yposition <= 0):
             self.CollisionwithWall(paddle, screen, 'l')
+        if(self.__xposition >= screen.getGameheight() -1 and (self.__yposition >= paddle.getStartpaddle() and self.__yposition < paddle.getStartpaddle() + paddle.getLength() )):
+            self.CollisionwithPaddle(screen,paddle)
         return
 
     def release(self, screen, paddle):

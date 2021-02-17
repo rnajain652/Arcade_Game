@@ -121,7 +121,7 @@ class Screen():
         # print
         for i in range(self.__gameheight):
             num = self.__gamewidth
-            if(i==ball.getXposition()):
+            if(i==ball.getXposition() and i != self.__gameheight -1 ):
                 num = self.__gamewidth -1
             for j in range(num):
                 print(self.__game[i][j] + " ", end='')

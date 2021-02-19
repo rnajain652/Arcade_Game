@@ -23,8 +23,16 @@ class Paddle():
     def getScore(self):
         return self.__score
 
+    def setScore(self):
+        self.__score = self.__score + 10
+        return
+
     def getTimetaken(self):
         return self.__timetaken
+
+    def setTimetaken(self,time):
+        self.__timetaken = time
+        return
 
     def getStartpaddle(self):
         return self.__startpaddle

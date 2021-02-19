@@ -1,14 +1,13 @@
 from colorama import init, Fore, Back, Style
 from random import randint
 
-
 class Ball():
-    def __init__(self, x, y):
+    def __init__(self, x, y,screen):
         self.__xposition = x
         self.__yposition = y
         self.__xvelocity = 1
         self.__yvelocity = 1
-        self.__speed = 0.50
+        self.__speed = screen.getGameheight()/100
         self.__free = 0
 
     def getfree(self):
@@ -69,7 +68,7 @@ class Ball():
             paddle.removepaddle(screen)
             paddle.setStartpaddle(int(screen.getGamewidth()/2))
             if(paddle.getLives() <= 0):
-                screen.gameover()
+                screen.gameover(screen,paddle)
             x = paddle.getStartpaddle() 
             y = paddle.getStartpaddle() + paddle.getLength() -1
             # mid = int((x + y)/2)
@@ -108,6 +107,60 @@ class Ball():
         self.__xvelocity = -self.__xvelocity
         return
 
+    def loopCheck(self, screen,paddle, bricks):
+        # print('\nin:')
+        # print(self.__xposition)
+        # print(self.__yposition)
+        # print(screen.getGameheight())
+        # print(screen.getGamewidth())
+        xp = self.__xposition 
+        yp = self.__yposition 
+        xv = self.__xvelocity 
+        yv = self.__yvelocity
+
+        if(xv < 0 ):
+            a1 = xp + xv 
+            a2 = xp
+        else:
+            a1 = xp
+            a2 = xp + xv
+
+        if(yv < 0 ):
+            b1 = yp + yv 
+            b2 = yp
+        else:
+            b1 = yp
+            b2 = yp + yv
+            
+        biczz =0
+        # print('looooop')
+        while a1 < a2:
+            # print(a1)
+            while b1 < b2:
+                # print(b1) 
+                for i in range(len(bricks)):
+                    # print(str(self.__xvelocity) + ' ' +str(self.__yvelocity))
+                    if(bricks[i].getActivated() == 1):
+                        biczz +=1
+                        # print(str(bricks[i].getXposition()) + ' ' +str(bricks[i].getYposition()))
+                        if(a1 >= bricks[i].getXposition() and a1 <= bricks[i].getXposition() + 1 and b1 >= bricks[i].getYposition() and b1<= bricks[i].getYposition() + int(screen.getGamewidth()/8) ):
+                            # print('x')
+                            if(bricks[i].getStrength() != 9):
+                                bricks[i].collision(screen,paddle)
+                            # self.__xposition = a1
+                            # self.__yvelocity = -self.__yvelocity
+                            if(xv < 0 and yv < 0 or xv >= 0 and yv >= 0):
+                                # self.__yposition = b1
+                                self.__xvelocity = -self.__xvelocity
+                            elif(xv < 0 and yv >= 0 or xv >= 0 and yv < 0):
+                                # self.__xposition = a1
+                                self.__yvelocity = -self.__yvelocity
+                            return
+                if(biczz == 0):
+                    screen.gameover()
+                b1 +=1
+            a1 +=1
+
     def collisionCheck(self, screen, paddle):
         # print('\nin:')
         # print(self.__xposition)
@@ -118,10 +171,11 @@ class Ball():
             self.CollisionwithWall(paddle, screen, 'd') 
         if(self.__yposition >= screen.getGamewidth()- 1):
             self.CollisionwithWall(paddle, screen, 'r')
-        if(self.__yposition <= 0):
+        if(self.__yposition < 0):
             self.CollisionwithWall(paddle, screen, 'l')
         if(self.__xposition >= screen.getGameheight() -1 and (self.__yposition >= paddle.getStartpaddle() and self.__yposition < paddle.getStartpaddle() + paddle.getLength() )):
             self.CollisionwithPaddle(screen,paddle)
+        # self.loopCheck(screen, bricks)
         return
 
     def release(self, screen, paddle):
@@ -141,7 +195,7 @@ class Ball():
         # print(self.__yposition)
         return
 
-    def movement(self, screen, paddle):
+    def movement(self, screen, paddle, bricks):
         self.removeBall(screen)
         self.__xposition += self.__xvelocity
         self.__yposition += self.__yvelocity
@@ -149,6 +203,7 @@ class Ball():
         # print(self.__xposition)
         # print(self.__yposition)
         self.collisionCheck(screen, paddle)
+        self.loopCheck(screen,paddle, bricks)
         self.setBall(screen, self.__xposition, self.__yposition)
        
         return

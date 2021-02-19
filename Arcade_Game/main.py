@@ -10,16 +10,17 @@ from input import Get, input_to
 size = os.get_terminal_size()
 
 screen = Screen(size[0], size[1])
-screen.initializeGamescreen()
+bricks = screen.initializeGamescreen()
 
 paddle = Paddle(int(size[0]/2))
 
 x = paddle.getStartpaddle() 
 y = paddle.getStartpaddle() + paddle.getLength() -1
 mid = int((x + y)/2)
-ball = Ball(screen.getGameheight()-2,randint(x, y))
+ball = Ball(screen.getGameheight()-2,randint(x, y),screen)
 
 x = 0
+start_time = time.time()
 prev_time = time.time()
 p_ball_time = time.time()
 
@@ -30,11 +31,12 @@ while True:
 
     if(curr_time - prev_time >= 0.05):
         print("\033[0;0H")
+        paddle.setTimetaken(int(curr_time-start_time))
         screen.printScreen(ball, paddle)
         prev_time = curr_time
 
     if(ball.getfree() == 1 and c_ball_time - p_ball_time >= ball.getSpeed()):
-        ball.movement(screen, paddle)
+        ball.movement(screen, paddle, bricks)
         p_ball_time = c_ball_time
         
     inp = input_to(Get())

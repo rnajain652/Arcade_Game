@@ -20,11 +20,7 @@ class Screen():
     def __init__(self, display_width, display_height):
         self.__displaywidth = display_width
         self.__displayheight = display_height
-
-        if display_width % 2 == 0:
-            self.__gamewidth = display_width
-        else:
-            self.__gamewidth = display_width - 1
+        self.__gamewidth = display_width
 
         self.__gameheight = display_height - 7
         self.__game = []
@@ -49,16 +45,24 @@ class Screen():
     def initializeGamescreen(self):
         brick_width = int(self.__gamewidth / 8)
 
+        nakli = []
+        sasti = []
+        birla = []
+        ambuja = []
         for i in range(row_layout):
             for j in range(col_layout):
                 if(grid[i][j] == 1):
                     self.bricks += [nakli_brick(i * 2, j * brick_width)]
+                    nakli += [nakli_brick(i * 2, j * brick_width)]
                 if(grid[i][j] == 2):
                     self.bricks += [sasti_brick(i * 2, j * brick_width)]
+                    sasti += [sasti_brick(i * 2, j * brick_width)]
                 if(grid[i][j] == 3):
                     self.bricks += [birla_brick(i * 2, j * brick_width)]
+                    birla += [birla_brick(i * 2, j * brick_width)]
                 if(grid[i][j] == 9):
                     self.bricks += [ambuja_brick(i * 2, j * brick_width)]
+                    ambuja += [ambuja_brick(i * 2, j * brick_width)]
 
         for i in range(self.__gameheight):
             curr_row = []
@@ -66,7 +70,7 @@ class Screen():
                 curr_row.append(Back.BLACK)
             self.__game += [curr_row]
         self.__game = np.asarray(self.__game)
-        return
+        return self.bricks
 
     def getGame(self):
         return self.__game
@@ -133,8 +137,18 @@ class Screen():
 
         return
 
-    def gameover(self):
+    def gameover(self,screen,paddle):
         print("\033[2J")
-        print('Game over')
+        print(Fore.CYAN + Style.BRIGHT + "                                                     ".center(screen.__displaywidth))
+        print(Fore.CYAN + Style.BRIGHT + "  _____                         ____                 ".center(screen.__displaywidth))
+        print(Fore.CYAN + Style.BRIGHT + " / ____|                       / __ \                ".center(screen.__displaywidth))
+        print(Fore.CYAN + Style.BRIGHT + "| |  __  __ _ _ __ ___   ___  | |  | |_   _____ _ __ ".center(screen.__displaywidth))
+        print(Fore.CYAN + Style.BRIGHT + "| | |_ |/ _` | '_ ` _ \ / _ \ | |  | \ \ / / _ \ '__|".center(screen.__displaywidth))
+        print(Fore.CYAN + Style.BRIGHT + "| |__| | (_| | | | | | |  __/ | |__| |\ V /  __/ |   ".center(screen.__displaywidth))
+        print(Fore.CYAN + Style.BRIGHT + " \_____|\__,_|_| |_| |_|\___|  \____/  \_/ \___|_|   ".center(screen.__displaywidth))
+        print(Fore.CYAN + Style.BRIGHT + "                                                     ".center(screen.__displaywidth))
+        print(Fore.CYAN + Style.BRIGHT + "                                                     ".center(screen.__displaywidth))
+        print(Fore.WHITE + Back.RED + Style.BRIGHT +("Lives: " + str(paddle.getLives()) + " | " + "Score: " + str(paddle.getScore()) + " | " + "Time: " + str(paddle.getTimetaken())).center(self.__displaywidth) + Style.RESET_ALL)
+        #SCORE
         exit()
         return
